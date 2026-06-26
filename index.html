@@ -1264,6 +1264,30 @@
       gap: 6px;
     }
 
+    /* ---- Logos images ---- */
+    .logo-img {
+      height: 30px;
+      width: auto;
+      display: block;
+      border-radius: 6px;
+      padding: 3px 8px;
+      background: rgba(255,255,255,0.96);
+      transition: background 0.3s, padding 0.3s;
+    }
+    .scrolled .logo-img { background: transparent; padding: 0; }
+    .logo-img-gb { height: 20px; }
+    .footer-logo-img { height: 24px; width: auto; display: block; }
+
+    /* ---- Captures écran plateforme ---- */
+    .f-screenshot {
+      width: 100%;
+      border-radius: 10px;
+      margin-top: 18px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.13);
+      border: 1px solid rgba(0,0,0,0.07);
+    }
+    .dark .f-screenshot { border-color: rgba(255,255,255,0.1); box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+
     /* ============================================================
        FLOATING CTA
     ============================================================ */
@@ -1376,9 +1400,9 @@
   <div class="wrap">
     <div class="nav-inner">
       <a href="#" class="nav-logo">
-        <span class="nav-logo-carmila">CARMILA</span>
+        <img src="images/carmila-logo.png" alt="CARMILA" class="logo-img">
         <span class="nav-sep"></span>
-        <span class="nav-logo-gb">GREENBIRDIE</span>
+        <img src="images/logo-greenbirdie.png" alt="GREENBIRDIE" class="logo-img logo-img-gb">
       </a>
 
       <ul class="nav-links">
@@ -1703,6 +1727,7 @@
           <li>QR Code réglementaire</li>
         </ul>
         <span class="f-tag f-tag-dark">⚡ 100% automatique</span>
+        <img src="images/dashboard-decret-tertiaire.png" alt="Capture plateforme Décret Tertiaire GREENBIRDIE" class="f-screenshot">
       </div>
 
       <!-- 3. Puissance souscrite -->
@@ -1717,6 +1742,7 @@
           <li>Détection des dépassements facturés</li>
           <li>Recommandations personnalisées</li>
         </ul>
+        <img src="images/dashboard-optimisation-puissance.png" alt="Capture outil optimisation puissance souscrite" class="f-screenshot">
       </div>
 
       <!-- 4. Mon Courtier -->
@@ -2051,9 +2077,9 @@
 
       <div class="footer-brand">
         <div class="footer-logo">
-          <span style="font-size:16px;font-weight:900;color:#E02020;letter-spacing:-0.03em;">CARMILA</span>
+          <img src="images/carmila-logo.png" alt="CARMILA" class="footer-logo-img" style="filter:brightness(0) invert(1);">
           <span style="width:1px;height:16px;background:rgba(255,255,255,0.12);"></span>
-          <span style="font-size:13px;font-weight:700;color:#4ADE80;">GREENBIRDIE</span>
+          <img src="images/logo-greenbirdie.png" alt="GREENBIRDIE" class="footer-logo-img" style="height:18px;filter:brightness(0) invert(1);">
         </div>
         <p>La plateforme énergie officielle des commerçants CARMILA. Gratuite pendant 3 ans, entièrement automatisée, et pilotée par des experts de l'énergie.</p>
       </div>
