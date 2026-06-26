@@ -1389,6 +1389,104 @@
       .stat-item:first-child { border-top: none; }
       .section-head { margin-bottom: 44px; }
     }
+
+    /* ============================================================
+       MODAL ACTIVATION
+    ============================================================ */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 22, 40, 0.82);
+      backdrop-filter: blur(7px);
+      -webkit-backdrop-filter: blur(7px);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+    .modal-box {
+      background: white;
+      border-radius: var(--r-xl);
+      padding: 44px 40px;
+      max-width: 480px;
+      width: 100%;
+      position: relative;
+      transform: translateY(30px) scale(0.97);
+      transition: transform 0.38s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: var(--shadow-xl);
+    }
+    .modal-overlay.open .modal-box {
+      transform: translateY(0) scale(1);
+    }
+    .modal-close {
+      position: absolute;
+      top: 14px; right: 14px;
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      line-height: 1;
+      color: var(--text-3);
+      transition: background 0.15s, color 0.15s;
+    }
+    .modal-close:hover { background: var(--border); color: var(--text); }
+    .modal-logos {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    .modal-logo-c { font-size: 14px; font-weight: 900; color: var(--carmila); letter-spacing: -0.03em; }
+    .modal-logo-sep { width: 1px; height: 14px; background: var(--border); }
+    .modal-logo-g { font-size: 11.5px; font-weight: 700; color: var(--green); }
+    .modal-title { font-size: 23px; font-weight: 800; letter-spacing: -0.025em; margin-bottom: 8px; }
+    .modal-sub { font-size: 14px; color: var(--text-3); line-height: 1.65; margin-bottom: 28px; }
+    .modal-success {
+      display: none;
+      text-align: center;
+      padding: 12px 0;
+    }
+    .modal-success.show { display: block; }
+    .modal-success-ico {
+      width: 68px; height: 68px;
+      background: var(--green-light);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 30px;
+    }
+    .modal-success h3 { font-size: 21px; font-weight: 800; margin-bottom: 12px; }
+    .modal-success p { font-size: 14px; color: var(--text-3); line-height: 1.65; margin-bottom: 8px; }
+    .modal-yousign {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--green-light);
+      border: 1px solid #BBF7D0;
+      border-radius: var(--r-sm);
+      padding: 9px 16px;
+      font-size: 13px;
+      color: var(--green);
+      font-weight: 600;
+      margin-top: 16px;
+    }
+    @media (max-width: 520px) {
+      .modal-box { padding: 32px 22px; }
+      .modal-title { font-size: 20px; }
+    }
   </style>
 </head>
 <body>
@@ -2058,7 +2156,7 @@
   <div class="wrap">
     <h2>Prêt à activer votre espace énergie ?</h2>
     <p>Rejoignez les commerçants CARMILA qui ont déjà activé leur assistant énergie gratuit.</p>
-    <a href="#" class="btn btn-white btn-lg">
+    <a href="#activer" class="btn btn-white btn-lg">
       Activer gratuitement mon espace →
     </a>
     <div class="final-cta-sub">
@@ -2141,6 +2239,63 @@
 
 
 <!-- ================================================
+     MODAL ACTIVATION
+================================================ -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-box">
+    <button class="modal-close" id="modalCloseBtn" aria-label="Fermer">×</button>
+
+    <div class="modal-logos">
+      <span class="modal-logo-c">CARMILA</span>
+      <span class="modal-logo-sep"></span>
+      <span class="modal-logo-g">GREENBIRDIE</span>
+    </div>
+
+    <!-- Formulaire -->
+    <div id="modalFormWrap">
+      <h2 class="modal-title">Activez votre espace énergie</h2>
+      <p class="modal-sub">Renseignez vos informations. Vous recevrez immédiatement votre lien de signature par email pour activer la collecte Enedis.</p>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="m-prenom">Prénom</label>
+          <input type="text" id="m-prenom" class="form-control" placeholder="Marie" autocomplete="given-name">
+        </div>
+        <div class="form-group">
+          <label for="m-nom">Nom</label>
+          <input type="text" id="m-nom" class="form-control" placeholder="Martin" autocomplete="family-name">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="m-commerce">Nom de votre commerce</label>
+        <input type="text" id="m-commerce" class="form-control" placeholder="Ex : Boutique Mode Centre">
+      </div>
+      <div class="form-group">
+        <label for="m-email">Email professionnel</label>
+        <input type="email" id="m-email" class="form-control" placeholder="marie.martin@commerce.fr" autocomplete="email">
+      </div>
+
+      <button class="btn btn-primary btn-lg" id="modalSubmitBtn" style="width:100%;justify-content:center;margin-top:8px;">
+        Recevoir mon lien de signature →
+      </button>
+      <p class="form-note" style="margin-top:14px;text-align:center;">Gratuit · Sans changement de fournisseur · Résiliable à tout moment</p>
+    </div>
+
+    <!-- Confirmation -->
+    <div class="modal-success" id="modalSuccess">
+      <div class="modal-success-ico">✅</div>
+      <h3>Votre lien a été envoyé !</h3>
+      <p>Consultez votre boîte email — vous y trouverez votre lien de signature pour activer la collecte de vos données Enedis.</p>
+      <p>Votre espace CARMILA Énergie sera opérationnel dans quelques minutes, sans aucune autre démarche de votre part.</p>
+      <div class="modal-yousign">
+        ✍️ Signature électronique sécurisée — YouSign
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ================================================
      JAVASCRIPT
 ================================================ -->
 <script>
@@ -2208,11 +2363,56 @@
     document.getElementById('courtierSuccess').classList.add('show');
   });
 
+  /* ---- Modal activation ---- */
+  function openModal() {
+    document.getElementById('modalOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+    document.getElementById('m-prenom').focus();
+  }
+
+  function closeModal() {
+    document.getElementById('modalOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('modalCloseBtn').addEventListener('click', closeModal);
+
+  document.getElementById('modalOverlay').addEventListener('click', (e) => {
+    if (e.target === document.getElementById('modalOverlay')) closeModal();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
+  });
+
+  document.getElementById('modalSubmitBtn').addEventListener('click', () => {
+    const prenom   = document.getElementById('m-prenom').value.trim();
+    const nom      = document.getElementById('m-nom').value.trim();
+    const commerce = document.getElementById('m-commerce').value.trim();
+    const email    = document.getElementById('m-email').value.trim();
+
+    if (!prenom || !nom || !commerce || !email) {
+      document.querySelectorAll('#modalFormWrap .form-control').forEach(input => {
+        input.style.borderColor = input.value.trim() ? '' : 'var(--carmila)';
+      });
+      return;
+    }
+
+    document.getElementById('modalFormWrap').style.display = 'none';
+    document.getElementById('modalSuccess').classList.add('show');
+  });
+
+  /* Reset validation state on input */
+  document.querySelectorAll('#modalFormWrap .form-control').forEach(input => {
+    input.addEventListener('input', () => { input.style.borderColor = ''; });
+  });
+
   /* ---- Smooth anchor scroll ---- */
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', (e) => {
       const id = a.getAttribute('href');
       if (id === '#') return;
+      if (id === '#activer') { e.preventDefault(); openModal(); return; }
       const target = document.querySelector(id);
       if (!target) return;
       e.preventDefault();
